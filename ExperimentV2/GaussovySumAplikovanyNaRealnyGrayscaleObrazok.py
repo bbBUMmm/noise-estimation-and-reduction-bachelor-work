@@ -60,7 +60,7 @@ noisy_image = image + noise.astype(np.int16)
 
 # Ensuring that all pixel values stay between 0 and 255, which is required for valid grayscale representation
 noisy_image = np.clip(noisy_image, 0, 255).astype(np.uint8)
-print(noisy_image)
+# print(noisy_image)
 for index in range(0, 100):
     filename = f'ZasumenyRealnyObrazokPozityVHistograme_{index}.png'
     if not os.path.isfile(filename):
