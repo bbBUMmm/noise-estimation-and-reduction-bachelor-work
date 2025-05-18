@@ -2,19 +2,46 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 
-# Load and convert to grayscale
-image = Image.open("LennaTestImage.png").convert("L")
-image_array = np.array(image)
 
-# Normalize to [0, 1]
-image_normalized = image_array / 255.0
+def poisson_noise(image):
+    """
+    Pridá Poissonov šum do obrázka.
 
-# Apply Poisson noise
-poisson_noisy = np.random.poisson(image_normalized * 255) / 255.0
-poisson_noisy = np.clip(poisson_noisy, 0, 1)
-poisson_noisy_image = (poisson_noisy * 255).astype(np.uint8)
+    image: NumPy pole obrázka (V, Š, C)
 
-# Display only the noisy image, no text or axes
-plt.imshow(poisson_noisy_image, cmap='gray')
+    Vráti nový obrázok so šumom.
+    """
+    # Pre správny Poissonov šum potrebujeme pixelové hodnoty v rozmedzí [0,1]
+    image_normalized = image / 255.0
+
+    # Generovanie Poissonovho šumu
+    noisy = np.random.poisson(image_normalized * 255) / 255.0
+
+    # Prevod späť na rozsah 0-255 a typ uint8
+    noisy_img = np.clip(noisy * 255, 0, 255).astype(np.uint8)
+
+    return noisy_img
+
+
+# Načítanie obrázka
+img = Image.open("LennaTestImage.png").convert("RGB")
+img_np = np.array(img)
+
+# Pridanie Poissonovho šumu
+noisy_img = poisson_noise(img_np)
+
+# Zobrazenie pôvodného a zašumeného obrázka
+plt.figure(figsize=(14, 7))
+
+plt.subplot(1, 2, 1)
+plt.imshow(img_np)
 plt.axis('off')
+plt.title('Pôvodný obrázok', fontsize=16, pad=20)
+
+plt.subplot(1, 2, 2)
+plt.imshow(noisy_img)
+plt.axis('off')
+plt.title('Obrázok s Poissonovým šumom', fontsize=16, pad=20)
+
+plt.subplots_adjust(top=0.85, bottom=0.05, left=0.05, right=0.95, wspace=0.15)
 plt.show()
