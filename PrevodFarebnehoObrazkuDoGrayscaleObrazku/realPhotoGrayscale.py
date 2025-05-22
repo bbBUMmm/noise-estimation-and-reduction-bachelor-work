@@ -1,11 +1,11 @@
 import cv2
 import matplotlib.pyplot as plt
 
-# Load the ObrazkyJPEG
-original_image = cv2.imread('../ObrazkyJPEG/VyrezyAleboSegmentyObrazkuJPEG/greenSignCut.jpg')
-image_gray = cv2.imread('../ObrazkyJPEG/VyrezyAleboSegmentyObrazkuJPEG/greenSignCut.jpg', cv2.IMREAD_GRAYSCALE)
+# Nacitat obrazok
+original_image = cv2.imread('../Obrazky/ObrazkyJPEG/VyrezyAleboSegmentyObrazkuJPEG/zelenaZnackaVyrez.jpg')
+image_gray = cv2.imread('../Obrazky/ObrazkyJPEG/VyrezyAleboSegmentyObrazkuJPEG/zelenaZnackaVyrez.jpg', cv2.IMREAD_GRAYSCALE)
 
-# OpenCV loads ObrazkyJPEG in BGR by default, but matplotlib expects RGB
+# OpenCV nacita obrazok v BGR by default ale mplib ocakava rhb
 original_image_rgb = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
 
 # Plot
